@@ -49,24 +49,63 @@ void exercicio5() {
 }
 
 void exercicio6() {
-    float posX = 0.0f, posY = 1.f; //0 - 1 
+    float posX = 1.0f, posY = 0.f; //0 - 1 
     float radius = 1.0f;
-    const unsigned int qntPoints = 5; // qntPoints >= 3 
+    const unsigned int qntPoints = 80; // qntPoints >= 3 
     const float angle = 3.14159 * 2.f / qntPoints;
 
+    //criando circulo amarelo
     for (int i = 0; i <= qntPoints; i++) {      
-        glBegin(GL_TRIANGLES);
-        glVertex3f(0,0,0); // ponto inicial (centro)
-        glVertex3f(posX, posY, 0); 
 
-        float newX = radius * std::sin(angle*i);
-        float newY = -radius * std::cos(angle * i);
+            float newX = radius * std::sin(angle * i);
+            float newY = -radius * std::cos(angle * i);
 
-        glVertex3f(newX, newY, 0);
-        glEnd();
-        posX = newX;
-        posY = newY;
+            glBegin(GL_TRIANGLES);
+
+            glColor3f(1, 1, 0);
+
+            glVertex2f(0, 0); // ponto inicial (centro)
+            glVertex2f(posX, posY);
+            glVertex2f(newX, newY);
+
+            glEnd();
+            posX = newX;
+            posY = newY;
+        
+        
     }
+    //contornando o circulo com preto
+    for (int i = 0; i <= qntPoints-1; i++) {
+       
+        
+        
+        glBegin(GL_LINE_STRIP);
+
+        glColor3f(0, 0, 0);
+
+        glVertex2f(posX, posY);
+        posX = radius * std::sin(angle * i);
+        posY = -radius * std::cos(angle * i);
+        glVertex2f(posX, posY);
+        glEnd();
+        
+    }
+
+    //criar a boca
+    const float mouth_angle = 0.7;
+    glColor3f(1.0f, 1.0f, 1.0f); // branco
+    glBegin(GL_TRIANGLES);
+    glVertex2f(0.0f, 0.0f); 
+    glVertex2f(radius * cos(mouth_angle)*2, radius * sin(-mouth_angle)*2); // ponto inicial da boca
+    glVertex2f(radius * cos(-mouth_angle)*2, radius * sin(mouth_angle)*2); // ponto final da boca
+    glEnd();
+    //contorno da boca
+    glColor3f(0,0,0);
+    glBegin(GL_LINE_STRIP);
+    glVertex2f(radius * cos(-mouth_angle), radius * sin(mouth_angle));
+    glVertex2f(0,0);
+    glVertex2f(radius * cos(mouth_angle), radius * sin(-mouth_angle));
+    glEnd();
 
 }
 
@@ -89,6 +128,8 @@ int main() {
     while (!glfwWindowShouldClose(window)) {
         // Limpar o buffer de cor
         glClear(GL_COLOR_BUFFER_BIT);
+
+        glClearColor(1,1,1,1); // R G B opacidade
 
         //exercicio5();
         exercicio6();
