@@ -51,7 +51,7 @@ void exercicio5() {
 void exercicio6() {
     float posX = 0.0f, posY = 1.f; //0 - 1 
     float radius = 1.0f;
-    const unsigned int qntPoints = 8; // qntPoints >= 3 
+    const unsigned int qntPoints = 5; // qntPoints >= 3 
     const float angle = 3.14159 * 2.f / qntPoints;
 
     for (int i = 0; i <= qntPoints; i++) {      
