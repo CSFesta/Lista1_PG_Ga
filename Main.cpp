@@ -4,6 +4,7 @@
 
 
 void exercicio5();
+void pac_man();
 void exercicio6();
 
 void exercicio5() {
@@ -48,7 +49,7 @@ void exercicio5() {
     glEnd();
 }
 
-void exercicio6() {
+void pac_man() {
     float posX = 1.0f, posY = 0.f; //0 - 1 
     float radius = 1.0f;
     const unsigned int qntPoints = 80; // qntPoints >= 3 
@@ -109,6 +110,42 @@ void exercicio6() {
 
 }
 
+void exercicio6() {
+    float posX = 1.0f, posY = 0.f; //0 - 1 
+    float radius = 1.0f;
+    const unsigned int qntPoints = 500; // qntPoints >= 3 
+    const float angle = 3.14159 * 2.f / qntPoints;
+
+    const float pizza_angle = 0.4;
+    glColor3f(0.5,0.5,0); 
+    glBegin(GL_TRIANGLES);
+    glVertex2f(0.0f, 0.0f); // ponto inicial da pizza
+    glVertex2f(radius * cos(pizza_angle) * 2 + posX, radius * sin(-pizza_angle) * 2 + posY); 
+    glVertex2f(radius * cos(-pizza_angle) * 2 + posX, radius * sin(pizza_angle) * 2 + posY); 
+    glEnd();
+
+    posX = 0.5, posY = 0.f;
+    radius /= 8;
+
+    glBegin(GL_TRIANGLES);
+    glColor3f(1,0,0); // cor vermelha
+    for (int i = 0; i < qntPoints; i++) {
+        float newX1 = radius * std::sin(angle * i); 
+        float newY1 = radius * std::cos(angle * i); 
+        float newX2 = radius * std::sin(angle * (i + 1)); 
+        float newY2 = radius * std::cos(angle * (i + 1));
+
+        glVertex2f(0.5f, 0.0f); // ponto inicial (centro do círculo)
+        glVertex2f(newX1 + 0.5f, newY1); 
+        glVertex2f(newX2 + 0.5f, newY2); 
+    }
+        glEnd();
+}
+
+
+
+
+
 int main() {
     // Inicializar GLFW
     if (!glfwInit())
@@ -132,6 +169,7 @@ int main() {
         glClearColor(1,1,1,1); // R G B opacidade
 
         //exercicio5();
+        //pac_man();
         exercicio6();
 
 
